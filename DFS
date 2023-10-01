@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector <int> vst;
+vector <vector<int>> a;
+int n, m;
+void DFS(int s){
+    vst[s]=true;
+    cout<<s<<" ";
+    for (auto i: a[s])
+        if (!vst[i]) DFS(i);
+}
+
+int main(){
+    cin >> n >> m;
+    a.resize(n+1);
+    for (int i = 1; i<=m; i++){
+        int u, v;
+        cin >> u >> v;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+    vst.resize(n+1, false);
+    DFS(0);
+}
