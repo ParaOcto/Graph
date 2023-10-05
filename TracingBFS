@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m, firstnode, lastnode, par[1005];
+vector<vector<int>> a;
+queue<int> q;
+bool vst[1005] = {false};
+
+void BFS(int s){
+    q.push(s);
+    vst[s]=true;
+    while (!q.empty()){
+        int s = q.front();
+        cout<<q.front()<<" ";
+        q.pop();
+        for (auto i:a[s])
+            if (!vst[i]){
+                vst[i]=true;
+                par[i] = s;
+                q.push(i);
+            }
+    }
+}
+
+void path(int u){
+     cout<<"Path from "<<firstnode<<" to "<<lastnode<<": ";
+    if (!vst[u]){
+        cout<<"No result";
+        exit(0);
+    }
+    vector <int> res;
+  
+    for (int i = u; i!=-1; i=par[i]) res.push_back(i);
+  
+    reverse(res.begin(), res.end());
+    for (auto i: res)   cout<<i<<" ";
+    
+}
+
+int main(){
+    cin >> n >> m >> firstnode >> lastnode;
+    a.resize(n);
+    for (int i = 1; i<=m; i++){
+        int u, v;
+        cin >> u >> v;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+    par[firstnode]=-1;
+    BFS(firstnode);
+    cout<<'\n';
+    path(lastnode);
+}
